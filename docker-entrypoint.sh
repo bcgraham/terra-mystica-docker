@@ -9,14 +9,12 @@ chown -R postgres /run/postgresql
 su postgres -c "$PGBIN/initdb -D $PGDATA"
 su postgres -c "$PGBIN/pg_ctl -o \"-c listen_addresses=''\" start"
 
-su postgres -c "$PGBIN/psql --dbname terra-mystica -f /sql/setup.sql"
+su postgres -c "$PGBIN/psql -f /setup.sql"
 su postgres -c "$PGBIN/psql --dbname terra-mystica -f /terra-mystica/schema/schema.sql"
-su postgres -c "$PGBIN/psql --dbname terra-mystica -f /sql/permissions_and_seed.sql"
+su postgres -c "$PGBIN/psql --dbname terra-mystica -f /permissions_and_seed.sql"
 
-/usr/local/apache2/bin/httpd -d /terra-mystica/www-docker -f ../config/apache.conf
+su postgres -c "$PGBIN/pg_ctl -o \"-c listen_addresses=''\" stop"
 
-if [ $1 == '' ]; then
-	su postgres -c "$PGBIN/pg_ctl start -o \"-c listen_addresses=''\""
-else 
-	su postgres -c "$PGBIN/pg_ctl start -o \"-c listen_addresses=''\""
-fi 
+/usr/local/apache2/bin/httpd -d /terra-mystica/www-docker -f ../config/apache.conf 
+
+su postgres -c "$PGBIN/postgres -o \"-c listen_addresses=''\""
