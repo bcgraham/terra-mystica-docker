@@ -7,7 +7,7 @@ chown -R postgres "$PGDATA"
 chmod g+s /run/postgresql
 chown -R postgres /run/postgresql
 su postgres -c "$PGBIN/initdb -D $PGDATA"
-su postgres -c "$PGBIN/pg_ctl -o \"-c listen_addresses=''\" start"
+su postgres -c "$PGBIN/pg_ctl start -w -o \"-c listen_addresses=''\""
 
 su postgres -c "$PGBIN/psql -f /setup.sql"
 su postgres -c "$PGBIN/psql --dbname terra-mystica -f /terra-mystica/schema/schema.sql"
