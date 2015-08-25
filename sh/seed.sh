@@ -21,5 +21,9 @@ su postgres -c "$PGBIN/pg_ctl stop"
 
 # daily job for ratings & stats 
 chown -R daemon /terra-mystica/www-docker/data
-. /build/ratings_stats.sh 
-cp /build/ratings_stats.sh /etc/cron.daily/ratings_stats.sh
+chsh -s /bin/bash daemon 
+
+su -c "perl -I/terra-mystica/src /terra-mystica/src/genratings.pl" daemon > /terra-mystica/www-docker/data/ratings.json
+su -c "perl -I/terra-mystica/src /terra-mystica/src/genstats.pl" daemon > /terra-mystica/www-docker/data/stats.json
+
+cp /build/ratings_stats.sh /etc/cron.d/ratings_stats.sh
