@@ -1,12 +1,14 @@
 FROM debian:jessie 
-ENV DEBIAN_FRONTEND=noninteractive
 
-COPY config.sh build.sh clean.sh /build/
+COPY config.sh build.sh clean.sh seed.sh /build/
 COPY sql/*.sql /
 
 RUN . /build/config.sh	&& \
       /build/build.sh 	&& \
-      /build/clean.sh 	
+      /build/clean.sh 	&& \
+      /build/seed.sh 
+
+RUN rm -rf /build
 
 COPY docker-entrypoint.sh /
 ENTRYPOINT ["/docker-entrypoint.sh"]
