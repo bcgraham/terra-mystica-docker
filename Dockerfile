@@ -1,6 +1,6 @@
 FROM debian:jessie 
 
-COPY config.sh build.sh clean.sh seed.sh /build/
+COPY sh/ /build/
 COPY sql/*.sql /
 
 RUN . /build/config.sh	&& \
