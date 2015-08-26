@@ -24,7 +24,7 @@ cp Makefile.AP2 Makefile && make -s && make -s install
 
 # game source 
 git clone -q https://github.com/bcgraham/terra-mystica.git /terra-mystica 
-mkdir /terra-mystica/logs /terra-mystica/www-docker /terra-mystica/www-docker/logs /terra-mystica/www-docker/conf
+mkdir /terra-mystica/logs /terra-mystica/www-docker /terra-mystica/www-docker/logs /terra-mystica/www-docker/conf /terra-mystica/www-docker/data/log
 cp /usr/local/apache2/conf/mime.types /terra-mystica/www-docker/conf/mime.types
 cd /terra-mystica
 emacs --batch --load org --file=usage.org --eval '(setq org-html-postamble nil)' --funcall org-html-export-to-html
