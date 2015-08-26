@@ -17,8 +17,6 @@ su postgres -c "$PGBIN/psql --dbname terra-mystica -f /terra-mystica/schema/sche
 # grant web user permissions and seed secrets & maps 
 su postgres -c "$PGBIN/psql --dbname terra-mystica -f /permissions_and_seed.sql"
 
-su postgres -c "$PGBIN/pg_ctl stop"
-
 # daily job for ratings & stats 
 chown -R daemon /terra-mystica/www-docker/data
 chsh -s /bin/bash daemon 
@@ -26,4 +24,7 @@ chsh -s /bin/bash daemon
 su -c "perl -I/terra-mystica/src /terra-mystica/src/genratings.pl" daemon > /terra-mystica/www-docker/data/ratings.json
 su -c "perl -I/terra-mystica/src /terra-mystica/src/genstats.pl" daemon > /terra-mystica/www-docker/data/stats.json
 
+su postgres -c "$PGBIN/pg_ctl stop"
+
 cp /build/ratings_stats.sh /etc/cron.d/ratings_stats.sh
+
